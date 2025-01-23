@@ -12,6 +12,8 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 
+let updateInterval;
+
 function age() {
   const birthDateInput = document.getElementById("birthDate");
   const birthDate = birthDateInput.value
@@ -25,12 +27,25 @@ function age() {
     "<span>" + Math.floor(t) + "</span>." + (t % 1).toFixed(digits).substr(2);
 }
 
+function updateRefreshRate() {
+  const digits = parseInt(document.getElementById("digitSlider").value);
+  clearInterval(updateInterval);
+
+  let refreshRate = 300;
+  if (digits > 8) {
+    refreshRate = 300 / Math.pow(1.5, digits - 8);
+  }
+
+  updateInterval = setInterval(age, refreshRate);
+}
+
 document.getElementById("birthDate").addEventListener("change", age);
 document.getElementById("digitSlider").addEventListener("input", function (e) {
   document.getElementById("digitCount").innerHTML =
     "<span>" + e.target.value + "</span> digits";
   age();
+  updateRefreshRate();
 });
 
 age();
-setInterval(age, 300);
+updateRefreshRate();

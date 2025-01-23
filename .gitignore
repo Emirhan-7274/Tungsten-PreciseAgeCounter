@@ -1,0 +1,7 @@
+# IDE ve sistem dosyaları
+.vscode/
+.idea/
+.DS_Store
+
+# Bağımlılıklar
+node_modules/ 
